@@ -2,7 +2,7 @@ import { Criteria, test, cascadeFind } from '@orioro/cascade'
 import { isPlainObject } from 'lodash'
 
 export type Resolver = (value:any, ResolverContext) => any
-export type ResolverCandidate = [Criteria, Resolver] | [Resolver]
+export type ResolverCandidate = ([Criteria, Resolver] | [Resolver])
 export type ResolverContext = {
   resolvers: ResolverCandidate[],
   path?: string,

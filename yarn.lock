@@ -1062,10 +1062,10 @@
     "@types/yargs" "^15.0.0"
     chalk "^4.0.0"
 
-"@orioro/cascade@^3.0.0-beta":
-  version "3.0.0-beta"
-  resolved "https://registry.yarnpkg.com/@orioro/cascade/-/cascade-3.0.0-beta.tgz#c84eb9de62349d2da6af28e3977e4b50fb518426"
-  integrity sha512-XlvvVT+4Pj0GcCw2mSNxTvcMPs58jU8s/EeGA+zoFKMClI0YTTlMkbtZLheiQxx1VTkZNTQLas8trF06y5F8MA==
+"@orioro/cascade@^3.0.0-beta.1":
+  version "3.0.0-beta.1"
+  resolved "https://registry.yarnpkg.com/@orioro/cascade/-/cascade-3.0.0-beta.1.tgz#3ca74a004166ee5e6b8818d5b987a3c79d8e6ca2"
+  integrity sha512-ARB4BQ8TQvugNbeOjF3EsfeBRhIvET1lKisk3+W3CDSNPOrtc7bdSxoe0VxWgoIaSsFt/trHvwpQFrCrTH5gDQ==
 
 "@rollup/plugin-babel@^5.2.0":
   version "5.2.1"

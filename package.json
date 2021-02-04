@@ -12,7 +12,8 @@
     "readme": "readme",
     "update-dependencies": "npx npm-check-updates -u",
     "develop": "rm -rf dist && rollup --config ./rollup/build.config.js --watch",
-    "tsc-declaration": "tsc --declaration --emitDeclarationOnly --declarationDir dist"
+    "tsc-declaration": "tsc --declaration --emitDeclarationOnly --declarationDir dist",
+    "commit": "cz"
   },
   "author": "",
   "license": "ISC",

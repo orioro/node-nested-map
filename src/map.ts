@@ -53,7 +53,7 @@ export const arrayResolver = (
       shouldResolveNested(item, index, array, context)
         ? nestedMap(item, {
             ...context,
-            path: `${context.path || ''}.${index}`
+            path: `${context.path}.${index}`
           })
         : item
     ))
@@ -76,12 +76,16 @@ export const objectResolver = (
       [key]: shouldResolveNested(object[key], key, object, context)
         ? nestedMap(object[key], {
             ...context,
-            path: `${context.path || ''}.${key}`
+            path: `${context.path}.${key}`
           })
         : object[key]
     }), {})
   }
 ])
+
+const RESOLVER_CONTEXT_DEFAULTS = {
+  path: ''
+}
 
 /**
  * @function nestedMap
@@ -93,6 +97,11 @@ export const nestedMap = (
   value:any,
   context:ResolverContext
 ):any => {
+  context = {
+    ...RESOLVER_CONTEXT_DEFAULTS,
+    ...context
+  }
+
   const resolver = cascadeFind(test, context.resolvers, value, context)
 
   return resolver === undefined

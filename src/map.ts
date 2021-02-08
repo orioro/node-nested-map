@@ -31,18 +31,31 @@ export type ResolverContext = {
   [key: string]: any
 }
 
+type PlainObject = { [key:string]: any }
+
+const _defaultShouldResolveNested = (
+  key:string,
+  keyValue:any,
+  value:(PlainObject | any[]),
+  context:ResolverContext
+) => true
+
 /**
  * @function arrayResolver
  * @returns {ResolverCandidate}
  */
-export const arrayResolver = ():ResolverCandidate => ([
+export const arrayResolver = (
+  shouldResolveNested = _defaultShouldResolveNested
+):ResolverCandidate => ([
   value => Array.isArray(value),
   (array:any[], context:ResolverContext) => (
     array.map((item, index) => (
-      nestedMap(item, {
-        ...context,
-        path: `${context.path || ''}.${index}`
-      })
+      shouldResolveNested(item, index, array, context)
+        ? nestedMap(item, {
+            ...context,
+            path: `${context.path || ''}.${index}`
+          })
+        : item
     ))
   )
 ])
@@ -51,17 +64,21 @@ export const arrayResolver = ():ResolverCandidate => ([
  * @function objectResolver
  * @returns {ResolverCandidate}
  */
-export const objectResolver = ():ResolverCandidate => ([
+export const objectResolver = (
+  shouldResolveNested = _defaultShouldResolveNested
+):ResolverCandidate => ([
   value => isPlainObject(value),
-  (value:{ [key: string]: any }, context:ResolverContext) => {
-    const keys = Object.keys(value)
+  (object:PlainObject, context:ResolverContext) => {
+    const keys = Object.keys(object)
 
     return keys.reduce((acc, key) => ({
       ...acc,
-      [key]: nestedMap(value[key], {
-        ...context,
-        path: `${context.path || ''}.${key}`
-      })
+      [key]: shouldResolveNested(object[key], key, object, context)
+        ? nestedMap(object[key], {
+            ...context,
+            path: `${context.path || ''}.${key}`
+          })
+        : object[key]
     }), {})
   }
 ])

@@ -6,7 +6,7 @@
   "module": "dist/index.mjs",
   "scripts": {
     "test": "jest --coverage",
-    "test:watch": "jest --watch",
+    "dev": "jest --watch",
     "build": "rm -rf dist && rollup --config ./rollup/build.config.js && npm run tsc-declaration",
     "prepare": "npm run build && npm run readme",
     "readme": "readme",

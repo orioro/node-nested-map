@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/orioro/node-nested-map/compare/v1.1.0...v1.2.0) (2021-02-09)
+
+
+### Features
+
+* remove leading dot from all context paths ([747f080](https://github.com/orioro/node-nested-map/commit/747f080a0ad02b03781c366471e028d27e126f40))
+
 # [1.1.0](https://github.com/orioro/node-nested-map/compare/v1.0.0...v1.1.0) (2021-02-08)
 
 

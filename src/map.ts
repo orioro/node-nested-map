@@ -33,6 +33,24 @@ export type ResolverContext = {
 
 type PlainObject = { [key:string]: any }
 
+/**
+ * Utility function to build dot (`.`) notation paths.
+ * Specifically prevents generating paths that start with a `.`.
+ * 
+ * @function pathJoin
+ * @param {string} [base='']
+ * @param {string | number} next
+ * @returns {string} path
+ */
+export const pathJoin = (
+  base:string = '',
+  next:(string | number)
+) => (
+  base === ''
+    ? `${next}`
+    : `${base}.${next}`
+)
+
 const _defaultShouldResolveNested = (
   key:string,
   keyValue:any,
@@ -53,7 +71,7 @@ export const arrayResolver = (
       shouldResolveNested(item, index, array, context)
         ? nestedMap(item, {
             ...context,
-            path: `${context.path}.${index}`
+            path: pathJoin(context.path, index)
           })
         : item
     ))
@@ -76,7 +94,7 @@ export const objectResolver = (
       [key]: shouldResolveNested(object[key], key, object, context)
         ? nestedMap(object[key], {
             ...context,
-            path: `${context.path}.${key}`
+            path: pathJoin(context.path, key)
           })
         : object[key]
     }), {})

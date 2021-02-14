@@ -4,20 +4,20 @@ import { isPlainObject } from 'lodash'
 /**
  * A function that takes as parameters the value and the resolverContext
  * and returns the resolved value.
- * 
+ *
  * @callback Resolver
  * @param {*} value
  * @param {ResolverContext} resolverContext
  * @returns {*} resolved
  */
-export type Resolver = (value:any, ResolverContext) => any
+export type Resolver = (value: any, ResolverContext) => any
 
 /**
  * `[Criteria, Resolver] | [Resolver]`
- * 
+ *
  * @typedef {[Criteria, Resolver] | [Resolver]} ResolverCandidate
  */
-export type ResolverCandidate = ([Criteria, Resolver] | [Resolver])
+export type ResolverCandidate = [Criteria, Resolver] | [Resolver]
 
 /**
  * @typedef {Object} ResolverContext
@@ -26,36 +26,30 @@ export type ResolverCandidate = ([Criteria, Resolver] | [Resolver])
  * @property {String} [context.path]
  */
 export type ResolverContext = {
-  resolvers: ResolverCandidate[],
-  path?: string,
+  resolvers: ResolverCandidate[]
+  path?: string
   [key: string]: any
 }
 
-type PlainObject = { [key:string]: any }
+type PlainObject = { [key: string]: any }
 
 /**
  * Utility function to build dot (`.`) notation paths.
  * Specifically prevents generating paths that start with a `.`.
- * 
+ *
  * @function pathJoin
  * @param {string} [base='']
  * @param {string | number} next
  * @returns {string} path
  */
-export const pathJoin = (
-  base:string = '',
-  next:(string | number)
-) => (
-  base === ''
-    ? `${next}`
-    : `${base}.${next}`
-)
+export const pathJoin = (base: string = '', next: string | number): string =>
+  base === '' ? `${next}` : `${base}.${next}`
 
 const _defaultShouldResolveNested = (
-  key:string,
-  keyValue:any,
-  value:(PlainObject | any[]),
-  context:ResolverContext
+  key: string, // eslint-disable-line @typescript-eslint/no-unused-vars
+  keyValue: any, // eslint-disable-line @typescript-eslint/no-unused-vars
+  value: PlainObject | any[], // eslint-disable-line @typescript-eslint/no-unused-vars
+  context: ResolverContext // eslint-disable-line @typescript-eslint/no-unused-vars
 ) => true
 
 /**
@@ -64,19 +58,18 @@ const _defaultShouldResolveNested = (
  */
 export const arrayResolver = (
   shouldResolveNested = _defaultShouldResolveNested
-):ResolverCandidate => ([
-  value => Array.isArray(value),
-  (array:any[], context:ResolverContext) => (
-    array.map((item, index) => (
+): ResolverCandidate => [
+  (value) => Array.isArray(value),
+  (array: any[], context: ResolverContext) =>
+    array.map((item, index) =>
       shouldResolveNested(item, index, array, context)
         ? nestedMap(item, {
             ...context,
-            path: pathJoin(context.path, index)
+            path: pathJoin(context.path, index),
           })
         : item
-    ))
-  )
-])
+    ),
+]
 
 /**
  * @function objectResolver
@@ -84,25 +77,28 @@ export const arrayResolver = (
  */
 export const objectResolver = (
   shouldResolveNested = _defaultShouldResolveNested
-):ResolverCandidate => ([
-  value => isPlainObject(value),
-  (object:PlainObject, context:ResolverContext) => {
+): ResolverCandidate => [
+  (value) => isPlainObject(value),
+  (object: PlainObject, context: ResolverContext) => {
     const keys = Object.keys(object)
 
-    return keys.reduce((acc, key) => ({
-      ...acc,
-      [key]: shouldResolveNested(object[key], key, object, context)
-        ? nestedMap(object[key], {
-            ...context,
-            path: pathJoin(context.path, key)
-          })
-        : object[key]
-    }), {})
-  }
-])
+    return keys.reduce(
+      (acc, key) => ({
+        ...acc,
+        [key]: shouldResolveNested(object[key], key, object, context)
+          ? nestedMap(object[key], {
+              ...context,
+              path: pathJoin(context.path, key),
+            })
+          : object[key],
+      }),
+      {}
+    )
+  },
+]
 
 const RESOLVER_CONTEXT_DEFAULTS = {
-  path: ''
+  path: '',
 }
 
 /**
@@ -112,17 +108,15 @@ const RESOLVER_CONTEXT_DEFAULTS = {
  * @returns {*}
  */
 export const nestedMap = (
-  value:any,
-  context:ResolverContext
-):any => {
+  value: any, // eslint-disable-line @typescript-eslint/explicit-module-boundary-types
+  context: ResolverContext
+): any => {
   context = {
     ...RESOLVER_CONTEXT_DEFAULTS,
-    ...context
+    ...context,
   }
 
   const resolver = cascadeFind(test, context.resolvers, value, context)
 
-  return resolver === undefined
-    ? value
-    : resolver(value, context)
+  return resolver === undefined ? value : resolver(value, context)
 }

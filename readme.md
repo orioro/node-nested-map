@@ -113,6 +113,7 @@ the cascade pattern: `@orioro.cascade` https://github.com/orioro/node-cascade
   - [`Resolver`](#resolver)
   - [`ResolverCandidate`](#resolvercandidate)
   - [`ResolverContext`](#resolvercontext)
+  - [`pathJoin(base, next)`](#pathjoinbase-next)
   - [`arrayResolver()`](#arrayresolver)
   - [`objectResolver()`](#objectresolver)
   - [`nestedMap(value, context)`](#nestedmapvalue-context)
@@ -137,6 +138,15 @@ and returns the resolved value.
 - `context` {Object}
   - `resolvers` {[[Resolver](#resolver)Candidate](#resolvercandidate)[]}
   - `path` {String}
+
+##### `pathJoin(base, next)`
+
+Utility function to build dot (`.`) notation paths.
+Specifically prevents generating paths that start with a `.`.
+
+- `base` {string}
+- `next` {string | number}
+- Returns: `path` {string} 
 
 ##### `arrayResolver()`
 

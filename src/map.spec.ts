@@ -3,6 +3,7 @@ import {
   nestedMap,
   arrayResolver,
   objectResolver,
+  defaultResolver,
 } from './map'
 
 /**
@@ -43,7 +44,12 @@ describe('example: resolving data references', () => {
     expect(
       nestedMap(data, {
         source,
-        resolvers: [RESOLVER_SOURCE_REF, arrayResolver(), objectResolver()],
+        resolvers: [
+          RESOLVER_SOURCE_REF,
+          arrayResolver(),
+          objectResolver(),
+          defaultResolver(),
+        ],
       })
     ).toEqual({
       key1: 'value1',
@@ -69,6 +75,7 @@ describe('example: resolving data references', () => {
           RESOLVER_SOURCE_REF,
           arrayResolver(),
           objectResolver(excludeKey43),
+          defaultResolver(),
         ],
       })
     ).toEqual({
@@ -96,6 +103,7 @@ describe('example: resolving data references', () => {
           RESOLVER_SOURCE_REF,
           arrayResolver(excludeOddIndexReferences),
           objectResolver(),
+          defaultResolver(),
         ],
       })
     ).toEqual({

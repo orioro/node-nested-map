@@ -97,6 +97,14 @@ export const objectResolver = (
   },
 ]
 
+/**
+ * @function defaultResolver
+ * @returns {ResolverCandidate}
+ */
+export const defaultResolver = (): ResolverCandidate => [
+  (value: any) => value,
+]
+
 const RESOLVER_CONTEXT_DEFAULTS = {
   path: '',
 }
@@ -118,5 +126,6 @@ export const nestedMap = (
 
   const resolver = cascadeFind(test, context.resolvers, value, context)
 
-  return resolver === undefined ? value : resolver(value, context)
+  // Return undefined if no resolver is matched
+  return typeof resolver === 'function' ? resolver(value, context) : undefined
 }

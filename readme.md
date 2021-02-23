@@ -13,6 +13,13 @@ Really useful for de-referencing data within a given data-structure. See example
 Resolving data references in nested object
 
 ```js
+import {
+  nestedMap,
+  objectResolver,
+  arrayResolver,
+  defaultResolver,
+} from '@orioro/nested-map'
+
 /**
  * Some external data source, from which references
  * such as ['$SOURCE', 'key1'] will be resolved.
@@ -80,7 +87,8 @@ const data = nestedMap(dataStructure, {
   resolvers: [
     RESOLVER_SOURCE_REF,
     arrayResolver(),
-    objectResolver()
+    objectResolver(),
+    defaultResolver(),
   ]
 })
 
@@ -116,6 +124,7 @@ the cascade pattern: `@orioro.cascade` https://github.com/orioro/node-cascade
   - [`pathJoin(base, next)`](#pathjoinbase-next)
   - [`arrayResolver()`](#arrayresolver)
   - [`objectResolver()`](#objectresolver)
+  - [`defaultResolver()`](#defaultresolver)
   - [`nestedMap(value, context)`](#nestedmapvalue-context)
 
 ##### `Resolver`
@@ -154,6 +163,11 @@ Specifically prevents generating paths that start with a `.`.
 - Returns: {[[Resolver](#resolver)Candidate](#resolvercandidate)} 
 
 ##### `objectResolver()`
+
+
+- Returns: {[[Resolver](#resolver)Candidate](#resolvercandidate)} 
+
+##### `defaultResolver()`
 
 
 - Returns: {[[Resolver](#resolver)Candidate](#resolvercandidate)} 

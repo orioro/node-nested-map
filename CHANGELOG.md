@@ -1,3 +1,15 @@
+# [2.0.0](https://github.com/orioro/node-nested-map/compare/v1.2.0...v2.0.0) (2021-02-23)
+
+
+### Features
+
+* return undefined if no resolver is matched ([61600da](https://github.com/orioro/node-nested-map/commit/61600daf24eecf77f24d88c005844ac5e967910f))
+
+
+### BREAKING CHANGES
+
+* return undefined if no resolver is matched instead of original value
+
 # [1.2.0](https://github.com/orioro/node-nested-map/compare/v1.1.0...v1.2.0) (2021-02-09)
 
 

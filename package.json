@@ -1,7 +1,14 @@
 {
   "name": "@orioro/nested-map",
   "version": "0.0.0-semantic-release",
-  "description": "",
+  "description": "Utility function that helps \"mapping\" values of a source structure to a new object with a corresponding structure but with new values. It's like `Array.prototype.map(input => output)`, but for nested data structures.",
+  "keywords": [],
+  "homepage": "https://github.com/orioro/node-nested-map",
+  "bugs": "https://github.com/orioro/node-nested-map/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/orioro/node-nested-map.git"
+  },
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "scripts": {
@@ -22,11 +29,14 @@
     "prettier": "prettier src",
     "ci-check": "yarn test && yarn tsc:validate && yarn lint"
   },
-  "author": "",
+  "author": "Simon Fan <simon@orioro.design>",
   "license": "ISC",
   "publishConfig": {
     "access": "public"
   },
+  "files": [
+    "dist/**/*"
+  ],
   "devDependencies": {
     "@babel/core": "^7.11.5",
     "@babel/preset-env": "^7.11.5",
